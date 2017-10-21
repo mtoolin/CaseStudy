@@ -1,0 +1,32 @@
+---
+title: "Case Study of countries GDP"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Presented by Michael Toolin, Venkat Karsala and Jamie Villenueva
+
+A series of questions were presented regarding GDP data. First we are interested in the 13th country in the GDP rankings.
+<!--- insert R code to display the 13th country --->
+
+The second question presented was to find the average GDP rankings for the **High Income:OECD** group and the **High Income:nonOECD** group.
+<!--- insert R code to display the averages here --->
+
+Below is plot of for **GDP of all countries** by Income Group:
+<!--- insert R code to show the plot            --->
+<!---            ```{r pressure, echo=FALSE}    --->
+<!---               plot(pressure)              --->
+
+The table below displays the GDP ranings seperated into 5 different groups.
+<!--- insert R code to show the table of the 5 groups 
+                  {r cars}
+                  summary(cars)               --->
+
+<!--- insert R code; how many countries in Lower middle group
+      among the 38 nations with highest GDP           --->
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
