@@ -1,8 +1,8 @@
 # Raw Analysis for GDP Data
-# Jaime Villanueva
-# 10/21/2017
+# Input: GDP Data from https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv
+# Output: dfgdp_2012_final.csv
 
-library(dyplr)
+library(dplyr)
 library(tidyr)
 
 # Read in and analyze the header to check how many rows to skip for a potential re-read
@@ -33,5 +33,8 @@ dfgdp_2012_clean2$Ranking <- as.numeric(dfgdp_2012_clean2$Ranking)
 dfgdp_2012_clean2$"Millions of US Dollars" <- as.numeric(dfgdp_2012_clean2$"Millions of US Dollars")
 
 dfgdp_2012_final <- dfgdp_2012_clean2
+       
+# Working directory is Data folder
+write.csv(dfgdp_2012_final, "dfgdp_2012_final.csv", row.names = FALSE)
 
 
