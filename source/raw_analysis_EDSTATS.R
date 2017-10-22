@@ -1,8 +1,8 @@
 # Raw Analysis for Edstats Aata
-# Jaime Villanueva
-# 10/21/2017
+# Input: Educational data from https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FEDSTATS_Country.csv 
+# Output: edstats_final.csv
 
-library(dyplr)
+library(dplyr)
 library(tidyr)
 library(countrycode)
 
@@ -36,5 +36,8 @@ edstats_final <- edstats[-dfshow_invalid_country$LineNo,]                       
 which(is.na(edstats_final$Income.Group))                                              # Verify no NA in income.group           
 
 View(edstats_final)
+       
+# Working directory is Data folder
+write.csv(edstats_final, "edstats_final.csv", row.names = FALSE)
 
 
