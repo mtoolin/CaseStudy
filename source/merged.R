@@ -7,8 +7,8 @@ library(tidyr)
 library(countrycode)
 
 # Read in from the Data folder
-gdp_2012_final <- read.csv("dfgdp_2012_final.csv", stringsAsFactors = FALSE)
-edstats_final <- read.csv("edstats_final.csv", stringsAsFactors = FALSE)
+gdp_2012_final <- read.csv("data/dfgdp_2012_final.csv", stringsAsFactors = FALSE)
+edstats_final <- read.csv("data/edstats_final.csv", stringsAsFactors = FALSE)
 
 # Check if any countries from GDP are not in EDSTATS by CountryCode
 no_match <- which(!(dfgdp_2012_final$CountryCode %in% edstats_final$CountryCode))           # Holds line number of country code that doesn't match
@@ -22,4 +22,4 @@ merged1 <- merge(dfgdp_2012_final, edstats_final, by="CountryCode")
 
 merged_final <- merged1
 
-write.csv(merged_final, "merged_final.csv", row.names = FALSE)
+write.csv(merged_final, "data/merged_final.csv", row.names = FALSE)
