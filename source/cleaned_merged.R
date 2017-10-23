@@ -6,6 +6,6 @@ merged_final <- read.csv("data/merged_final.csv", stringsAsFactors = FALSE)
 
 cleaned_merged1 <- select(merged_final, "CountryCode", "Country", "Ranking", "Millions.US.Dollars", "Income.Group")
 
-cleaned_merged_final <- arrange(cleaned_merged_final, dMillions.US.Dollars)
+cleaned_merged_final <- arrange(cleaned_merged_final, CountryCode)
 
 write.csv(cleaned_merged_final, "data/cleaned_merged_final.csv", row.names = FALSE)
