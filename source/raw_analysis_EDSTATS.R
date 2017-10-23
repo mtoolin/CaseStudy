@@ -1,5 +1,5 @@
 # Raw Analysis for Edstats Aata
-# Input: Educational data from https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FEDSTATS_Country.csv 
+# Input: edstats_country.csv
 # Output: edstats_final.csv
 
 library(dplyr)
@@ -7,7 +7,7 @@ library(tidyr)
 library(countrycode)
 
 # working directory needs to be directory containing .csv to read in the data
-edstats <- read.csv("6306 case study getdata_data_EDSTATS_Country.csv", na.strings = c("","NA"), stringsAsFactors = FALSE)
+edstats <- read.csv("data/edstats_country.csv", na.strings = c("","NA"), stringsAsFactors = FALSE)
 edstats <- tbl_df(edstats)
 
 edstats                                     # Checking nibble for dimensions and structure
@@ -36,8 +36,8 @@ edstats_final <- edstats[-dfshow_invalid_country$LineNo,]                       
 which(is.na(edstats_final$Income.Group))                                              # Verify no NA in income.group           
 
 View(edstats_final)
-       
+
 # Working directory is Data folder
-write.csv(edstats_final, "edstats_final.csv", row.names = FALSE)
+write.csv(edstats_final, "data/edstats_final.csv", row.names = FALSE)
 
 
