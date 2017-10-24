@@ -5,22 +5,39 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
 ```
 
 ## Presented by Michael Toolin, Venkat Karsala and Jamie Villenueva
+#Introduction
+A series of questions were presented regarding GDP data.  The data was provided in two different data sets.
+The data sets needed to be merged and then the questions are answered
 
-A series of questions were presented regarding GDP data. First we are interested in the 13th country in the GDP rankings.
-<!--- insert R code to display the 13th country --->
+```{r missmatch, echo=TRUE}
+dfgdp_2012_final <- read.csv('../data/dfgdp_2012_final.csv', stringsAsFactors = FALSE)
+edstats_final <- read.csv('../data/edstats_final.csv', stringsAsFactors = FALSE)
+NumMatches <- inner_join(dfgdp_2012_final,edstats_final)%>% summarise(cnt=n())%>% as.numeric()
+``` 
+The first question presented was how many ID's in the two data sets matched.  
+```{r}
+cat("There were",NumMatches,"found to be the same in the data sets \n")
+```
+
+```{r arranged, echo=TRUE}
+cleaned_merged1 <- read.csv('../data/cleaned_merged_final.csv')
+arrangByUSD <- arrange(cleaned_merged1, Millions.US.Dollars)
+cat("The 13th country in the ascending GDP rankings is",arrangByUSD$Country[13]%>%as.character(),"\n")
+```
 
 The second question presented was to find the average GDP rankings for the **High Income:OECD** group and the **High Income:nonOECD** group.
 <!--- insert R code to display the averages here --->
 
 Below is plot of for **GDP of all countries** by Income Group:
 <!--- insert R code to show the plot            --->
-<!---            ```{r pressure, echo=FALSE}    --->
+<!---            ```{r pressure, echo=TRUE}    --->
 <!---               plot(pressure)              --->
 
-The table below displays the GDP ranings seperated into 5 different groups.
+The table below displays the GDP rankings seperated into 5 different groups.
 <!--- insert R code to show the table of the 5 groups 
                   {r cars}
                   summary(cars)               --->
@@ -29,4 +46,4 @@ The table below displays the GDP ranings seperated into 5 different groups.
       among the 38 nations with highest GDP           --->
 
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
