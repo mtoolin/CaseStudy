@@ -2,23 +2,25 @@
 # Input: dfgdp_2012_final.csv and edstats_final.csv
 # Output: merged_final.csv
 
-library(dplyr)
 library(tidyr)
 library(countrycode)
 
 # Read in from the Data folder
-dfgdp_2012_final <- read.csv("data/dfgdp_2012_final.csv", stringsAsFactors = FALSE)
-edstats_final <- read.csv("data/edstats_final.csv", stringsAsFactors = FALSE)
+dfgdp_2012_prepmerge <- read.csv("data/dfgdp_2012_final.csv", stringsAsFactors = FALSE)
+edstats_prepmerge <- read.csv("data/edstats_final.csv", stringsAsFactors = FALSE)
 
 # Check if any countries from GDP are not in EDSTATS by CountryCode
-no_match <- which(!(dfgdp_2012_final$CountryCode %in% edstats_final$CountryCode))           # Holds line number of country code that doesn't match
-add <- dfgdp_2012_final$CountryCode[no_match]                                               # Extracts value of country code that doesn't match
-add_vector <- c(add,rep(c("NA"),30))                                                        # Create new vector in preparation to add to edstats
-edstats_final <- rbind(edstats_final, add_vector)                                           # Bind the new vector to edstats
-edstats_final$Long.Name[155] <- countrycode("SSD", origin="iso3c", destination = "country.name")  # Supply the country name for one that didn't match
-
+no_match <- which(!(dfgdp_2012_prepmerge$CountryCode %in% edstats_prepmerge$CountryCode))           # Holds line number(s) of country code(s) with no match
+add <- dfgdp_2012_prepmerge$CountryCode[no_match]                                                   # Extracts value(s) of country code(s) with no match
+edstats_prepmerge_dup <- edstats_prepmerge                                                          # duplicate edstats_prepmerge prevents overwriting so no_match assignment on line 13 can be repeated reliably                              
+add.nomatch.vectors <- matrix(add, nrow = length(add),ncol = length(edstats_prepmerge_dup))         # Create matrix with with each column being vector to be added to edstats_prepmerge_dup
+for (x in 1:length(add)){                                                                           # For every country not matched
+  add.nomatch.vectors[x, 2:length(edstats_prepmerge_dup)] <- "NA"                                   # Fill vector with "NA" after country code
+  edstats_prepmerge_dup <- rbind(edstats_prepmerge_dup, add.nomatch.vectors[x,])                            # Bind the vector as new row on edstats_prepmerge_dup
+}
+                                              
 # Merge the data sets, only keeping countries with a value for GDP
-merged1 <- merge(dfgdp_2012_final, edstats_final, by="CountryCode")
+merged1 <- merge(dfgdp_2012_prepmerge, edstats_prepmerge_dup, by="CountryCode")
 
 merged_final <- merged1
 
