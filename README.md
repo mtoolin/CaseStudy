@@ -1,9 +1,6 @@
 # CaseStudy
 ## MSDS 6306 Case Study 1 for Jamie Villenueva, Venkat Kasrala and Michael Toolin
-
 <br>
-<br>
-
 #### File flow for source files: <br> <br>
 __ReadURLData.R__ <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output: edstats_country.csv and gdp.csv <br>
