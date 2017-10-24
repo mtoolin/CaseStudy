@@ -28,7 +28,7 @@ show_invalid_country <- which(is.na(show_invalid_country))    #holds line number
 dfshow_invalid_country <- data.frame(LineNo = show_invalid_country, edstats$Long.Name[show_invalid_country])
 View(dfshow_invalid_country)
 
-# Manually inspected invalid countries and removed valid countries from vector
+# Manually inspected invalid countries and removed valid countries from vector !!! For now this needs to be inspected for possible adjustments every run
 dfshow_invalid_country <- dfshow_invalid_country[-c(1,8,10,11,13,19,26,31),]   
 
 edstats_final <- edstats[-dfshow_invalid_country$LineNo,]                             # Removing invalid countries
