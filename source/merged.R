@@ -7,7 +7,7 @@ library(tidyr)
 library(countrycode)
 
 # Read in from the Data folder
-gdp_2012_final <- read.csv("data/dfgdp_2012_final.csv", stringsAsFactors = FALSE)
+dfgdp_2012_final <- read.csv("data/dfgdp_2012_final.csv", stringsAsFactors = FALSE)
 edstats_final <- read.csv("data/edstats_final.csv", stringsAsFactors = FALSE)
 
 # Check if any countries from GDP are not in EDSTATS by CountryCode
