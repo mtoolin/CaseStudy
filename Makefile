@@ -1,19 +1,22 @@
 all: report.html
 
 clean:
-	rm -f gdp education gdpClean.txt educationClean.txt mergeData.tsv ggplot.png report.html
+	rm -rf data paper/CaseStudy.html report.html
 	
-gdpClean.txt: source/gdpClean.r data/gdp
-	cp $< $@
+download.txt: source/ReadURLData.r
+	Rscript $< $@
 
-educationClean.txt: source/educationClean.r data/education
-	cp $< $@
+gdpClean.txt: source/raw_analysis_GDP.r download.txt
+	Rscript $< $@
 	
-mergeData.tsv: source/mergeData.r gdpClean.txt educationClean.txt
+educationClean.txt: source/raw_analysis_EDSTATS.r gdpClean.txt
+	Rscript $< $@
+	
+mergeData.tsv: source/merged.r educationClean.txt
 	Rscript $<
 	
-ggplot.png: source/generateReports.r mergeData.tsv
+cleanmerged.tsv: source/cleaned_merged.r mergeData.tsv
 	Rscript $<
 
-report.html: report.rmd mergeData.tsv ggplot.png
+report.html: paper/CaseStudy.Rmd cleanmerged.tsv
 	Rscript -e 'rmarkdown::render("$<")'
