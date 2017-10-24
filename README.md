@@ -5,7 +5,7 @@ MSDS 6306 Case Study 1 for Jamie Villenueva, Venkat Kasrala and Michael Toolin
 <br>
 
 File flow for source files: <br>
-ReadURLData.R <br>
+*ReadURLData.R* <br>
         output: edstats_country.csv and gdp.csv <br>
 raw_analysis_GDP.R <br>
         input: gdp.csv <br>
