@@ -22,14 +22,18 @@ The first question presented was how many ID's in the two data sets matched.
 ```{r}
 cat("There were",NumMatches,"found to be the same in the data sets \n")
 ```
-
+The second question is find out the 13th Country when order by GDP in ascending order
 ```{r arranged, echo=TRUE}
 cleaned_merged1 <- read.csv('../data/cleaned_merged_final.csv')
 arrangByUSD <- arrange(cleaned_merged1, Millions.US.Dollars)
 cat("The 13th country in the ascending GDP rankings is",arrangByUSD$Country[13]%>%as.character(),"\n")
 ```
 
-The second question presented was to find the average GDP rankings for the **High Income:OECD** group and the **High Income:nonOECD** group.
+The third question presented was to find the average GDP rankings for the **High Income:OECD** group and the **High Income:nonOECD** group.
+```{r MeanRaning, echo=TRUE}
+cleaned_merged1 %>% filter(Income.Group %in% c("High income: OECD" , "High income: nonOECD")) %>% group_by(Income.Group) %>% summarise( average = mean(Ranking)) %>% mutate_if(is.factor, as.character) %>% as.data.frame(as.matrix(),stringsAsFactors=F)
+```
+
 <!--- insert R code to display the averages here --->
 
 Below is plot of for **GDP of all countries** by Income Group:
