@@ -9,7 +9,7 @@ __raw_analysis_GDP.R__ <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input: gdp.csv <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output: dfgdp_2012_final.csv <br>
 __raw_analysis_EDSTATS.R__ <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input: edstats_country.csv <br> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input: edstats_country.csv and dfgdp_2012_final.csv <br> 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output: edstats_final.csv <br>
 __merged.R__ <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;input: dfgdp_2012_final.csv and edstats_final.csv <br>
