@@ -2,9 +2,6 @@
 # Input: dfgdp_2012_final.csv and edstats_final.csv
 # Output: merged_final.csv
 
-library(tidyr)
-
-
 # Read in from the Data folder
 dfgdp_2012_prepmerge <- read.csv("data/dfgdp_2012_final.csv", stringsAsFactors = FALSE)
 edstats_prepmerge <- read.csv("data/edstats_final.csv", stringsAsFactors = FALSE)

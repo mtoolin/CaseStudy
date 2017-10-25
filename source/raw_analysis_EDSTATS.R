@@ -2,7 +2,7 @@
 # Input: edstats_country.csv and dfgdp_2012_final.csv
 # Output: edstats_final.csv
 
-library(dplyr)
+#library(dplyr)
 
 # working directory needs to be directory containing .csv to read in the data
 edstats <- read.csv("data/edstats_country.csv", na.strings = c("","NA"), stringsAsFactors = FALSE)
