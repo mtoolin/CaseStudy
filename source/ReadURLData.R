@@ -12,6 +12,5 @@ URL2 <-"https://d396qusza40orc.cloudfront.net/getdata/data/EDSTATS_Country.csv"
 destfile1 <-"data/gdp.csv"
 destfile2 <-"data/edstats_country.csv"
 
-dir.create("data")
 download.file(URL1,destfile1)
 download.file(URL2,destfile2)

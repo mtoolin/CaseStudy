@@ -38,4 +38,3 @@ dfgdp_2012_final <- dfgdp_2012_clean2
 # Working directory is Data folder
 write.csv(dfgdp_2012_final, "data/dfgdp_2012_final.csv", row.names = FALSE)
 
-
