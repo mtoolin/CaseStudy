@@ -1,5 +1,5 @@
 # CaseStudy
-## MSDS 6306 Case Study 1 for Jamie Villenueva, Venkat Kasrala and Michael Toolin
+### MSDS 6306 Case Study 1 for Jaime Villanueva, Venkat Kasrala and Michael Toolin
 <br>
 
 #### File flow for source files: <br> <br>
