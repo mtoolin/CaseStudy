@@ -1,41 +1,23 @@
 # Raw Analysis for Edstats Aata
-# Input: edstats_country.csv
+# Input: edstats_country.csv and dfgdp_2012_final.csv
 # Output: edstats_final.csv
 
-library(dplyr)
-library(tidyr)
-library(countrycode)
+#library(dplyr)
 
 # working directory needs to be directory containing .csv to read in the data
 edstats <- read.csv("data/edstats_country.csv", na.strings = c("","NA"), stringsAsFactors = FALSE)
+dfgdp_edstats <- read.csv("data/dfgdp_2012_final.csv", stringsAsFactors = FALSE)
+
 edstats <- tbl_df(edstats)
+dfgdp_edstats <- tbl_df(dfgdp_edstats)    # Needed for country code comparison vector to get rid of countries no
 
-edstats                                     # Checking nibble for dimensions and structure
-names(edstats)
-sapply(edstats, function(x) all(is.na(x)))  # check for columns with no data
-View(edstats)                               # Because size from inspection is manageable
+matched.result <- match(edstats$CountryCode, dfgdp_edstats$CountryCode)     # Creates vector holding line number in edstats of match
 
-# Noticed invalid country codes so using the countrycode package to find lines with invalid countries
-show_invalid_country <- countrycode(edstats$Long.Name, origin = "country.name", destination = "iso3c")
-
-show_invalid_country <- which(is.na(show_invalid_country))    #holds line numbers of invalid countries
-
-# It looks like lines without an income group are not valid countries, 
-# but each line tagged invalid was manually inspected before deleting row 
-# to be sure it wasn't just missing data. Some countries that countrycode() listed as invalid were valid.
-
-# Create a dataframe with invalid countries and line number
-dfshow_invalid_country <- data.frame(LineNo = show_invalid_country, edstats$Long.Name[show_invalid_country])
-View(dfshow_invalid_country)
-
-# Manually inspected invalid countries and removed valid countries from vector !!! For now this needs to be inspected for possible adjustments every run
-dfshow_invalid_country <- dfshow_invalid_country[-c(1,8,10,11,13,19,26,31),]   
-
-edstats_final <- edstats[-dfshow_invalid_country$LineNo,]                             # Removing invalid countries
-
-which(is.na(edstats_final$Income.Group))                                              # Verify no NA in income.group           
-
-View(edstats_final)
+edstats_final <- data.frame(stringsAsFactors = FALSE)     #initialize empty data frame
+edstats_final <- tbl_df(edstats_final)
+for (x in 1:length(matched.result)){
+  ifelse (is.na(matched.result[x]),"NA" , edstats_final <-rbind(edstats_final, edstats[x,]))
+}
 
 # Working directory is Data folder
 write.csv(edstats_final, "data/edstats_final.csv", row.names = FALSE)
