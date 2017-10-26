@@ -162,7 +162,18 @@ cat("The 13th country in the ascending GDP rankings is",arrangByUSD$Country[13]%
 #### Question 3
 The third question presented was to find the average GDP rankings for the **High Income:OECD** group and the **High Income:nonOECD** group.
 ```{r MeanRaning, echo=TRUE}
-cleaned_merged1 %>% filter(Income.Group %in% c("High income: OECD" , "High income: nonOECD")) %>% group_by(Income.Group) %>% summarise( average = mean(Ranking)) %>% mutate_if(is.factor, as.character) %>% as.data.frame(as.matrix(),stringsAsFactors=F)
+###############################################################
+#                                                             #
+# Coerce some of the data to proper classes so Income.Group   #
+# can be filtered by High Income OECD and High Income:nonOECD #
+# Apply the filter and get the average rankings of each group #
+#                                                             #
+###############################################################
+cleaned_merged1 %>% filter(Income.Group %in% c("High income: OECD" , "High income: nonOECD")) %>%
+  group_by(Income.Group) %>% 
+  summarise( average = mean(Ranking)) %>% 
+  mutate_if(is.factor, as.character) %>% 
+  as.data.frame(as.matrix(),stringsAsFactors=F)
 ```
 The difference in mean of High Income:nonOECD vs. High Income:OECD is \$59 million. High Income:nonOECD increases by \$1.79 million for every million High Income:OECD increases.
 
@@ -200,8 +211,18 @@ There are five countres in the Lower Middle Income group but rank higher than 39
 ```{r}
 Income.Group_table <- Cleaned.Merged.Analysis
 Income.Group_table <- Income.Group_table[c("Income.Group", "CountryCode", "Country", "Ranking", "Millions.US.Dollars")]
-
-
+###############################################################
+#                                                             #
+# Build the data frame sorted by Income group                 #
+# Iterate through the Income.Group vector and skips all NA    #
+# Group by numbers so we can explictly sort in ways we want:  #
+#    1: High Income: OECD                                     #
+#    2: High Income nonOECD                                   #
+#    3: Upper Middle Income                                   #
+#    4: Lower Middle Income                                   #
+#    5: Low Income                                            #
+#                                                             #
+###############################################################
 for (x in 1:length(Income.Group_table$Income.Group)){
 ifelse(is.na(Income.Group_table$Income.Group[x]),Income.Group_table<-Income.Group_table[-x,],"NA")
 ifelse(Income.Group_table$Income.Group[x]=="Lower middle income", Income.Group_table$newcolumn[x]<-4,"NA")
