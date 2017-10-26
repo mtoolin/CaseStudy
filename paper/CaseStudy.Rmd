@@ -19,6 +19,134 @@ dfgdp_2012_final <- read.csv('../data/dfgdp_2012_final.csv', stringsAsFactors = 
 edstats_final <- read.csv('../data/edstats_final.csv', stringsAsFactors = FALSE)
 NumMatches <- inner_join(dfgdp_2012_final,edstats_final)%>% summarise(cnt=n())%>% as.numeric()
 ``` 
+<br>
+
+### Cleaning Raw Source Files:
+```{r}
+print("source(source/raw_analysis_GDP.R)")
+```
+
+<br>
+
+#### raw_analysis_GDP.R
+```{r gdp1}
+#gdp_2012 <- read.csv("data/gdp.csv", skip=4, 
+#          na.strings = c("","NA"), stringsAsFactors = FALSE)   # Re-read data skipping header
+#dfgdp_2012 <- tbl_df(gdp_2012)                                 # Create data frame 
+#names(dfgdp_2012)                                              # Check column names
+#sapply(dfgdp_2012, function(x) all(is.na(x)))                  # Check for columns with no data
+```
+This code reads the raw data in and inspects it in preparation for cleaning. Five columns were found empty and *X.5* on further inspection was not data but notations.
+
+<br>
+
+
+```{r gdp2}
+#dfgdp_2012_clean1 <- select(dfgdp_2012, "CountryCode" = X, Ranking = X.1, Country = X.3,  # Select and   
+#                            "Millions.US.Dollars" = X.4)                                  # rename columns 
+#                                                                                          # 1,2,4, and 5
+#dfgdp_2012_clean2 <- filter(dfgdp_2012_clean1, !is.na(Ranking) &                  # Filter out any 
+#                            !is.na(CountryCode))                                  # line without a
+#                                                                                  # country code and ranking
+#dfgdp_2012_clean2$"Millions.US.Dollars" <-                                         # Get rid of the commas 
+#                            gsub(",", "", dfgdp_2012_clean2$"Millions.US.Dollars") # in the 
+#                                                                                   # "Millions.US.Dollars" 
+#dfgdp_2012_clean2$Ranking <- as.numeric(dfgdp_2012_clean2$Ranking)                 # Convert Ranking and 
+#dfgdp_2012_clean2$"Millions.US.Dollars" <-                                         # Millions.US.Dollars 
+#                            as.numeric(dfgdp_2012_clean2$"Millions.US.Dollars")    # columns to numeric
+```
+The select function was used to filter out the data columns. Commas had to be removed from the *Millions.US.Dollars* column, and then the number columns were cast to numerics.
+
+<br>
+
+```{r}
+print("source(source/raw_analysis_EDSTATS.R)")
+```
+
+<br>
+
+#### raw_analysis_EDSTATS.R
+```{r edstats1}
+#edstats <- read.csv("data/edstats_country.csv", na.strings = c("","NA"),             # Read in files and 
+#                    stringsAsFactors = FALSE)                                        # and fill blanks 
+#dfgdp_edstats <- read.csv("data/dfgdp_2012_final.csv", stringsAsFactors = FALSE)     # with NA
+```    
+This code reads in and inspects the files in preparation for cleaning.
+
+<br>
+
+```{r edstats2}
+#matched.result <- match(edstats$CountryCode, dfgdp_edstats$CountryCode)     # Creates vector holding line 
+#                                                                            # number(s) if matched edstats
+#                                                                            # and NAs if not matched
+#edstats_final <- data.frame(stringsAsFactors = FALSE)                       # Initialize empty data frame
+#
+#
+#for (x in 1:length(matched.result)){                                      # Iterate through matched.result 
+#       ifelse (is.na(matched.result[x]),"NA", edstats_final <-            # if not NA, tack row onto
+#                 rbind(edstats_final, edstats[x,]))                       # edstats_final
+#}
+```
+The country codes for the first columns are compared, and the result of the comparison is put into the vector *matched.result* with matches showing the line number of the row in *edstats* that matches. Non-matches show an NA. The for loop checks *matched.result* skipping over NA's and adds the *edstats* row of the encountered line numbers to *edstats_final.* This ensures that the only countries left in *edstats_final* are countries with GDP data.
+
+<br>
+
+### Merging Files and Cleaning the Merged File
+```{r}
+print("source(source/merged.R)")
+```
+
+<br>
+
+#### merged.R
+```{r merged1}
+#dfgdp_2012_prepmerge <- read.csv("data/dfgdp_2012_final.csv", stringsAsFactors = FALSE)
+#edstats_prepmerge <- read.csv("data/edstats_final.csv", stringsAsFactors = FALSE)
+#no_match <- which(!(dfgdp_2012_prepmerge$CountryCode %in%       # Check if any countries from dfgdp are  
+#                      edstats_prepmerge$CountryCode))           # not in EDSTATS by CountryCode          
+#                                                                # Holds line number(s) of country code(s) 
+#                                                                # with no match
+#add <- dfgdp_2012_prepmerge$CountryCode[no_match]               # Extracts value(s) of country code(s) 
+#                                                                # with no match
+```
+After reading the data, the country codes are compared for both data frames to see if there are any countries in the *dfgdp_2012_prepmerge* that are not in *edstats_prepmerge$CountryCode*. The line number(s) without a match are stored, and the country code value(s) at that number(s) is stored in *add*.
+
+<br>
+
+```{r merged2}
+#edstats_prepmerge_dup <- edstats_prepmerge                    
+#add.nomatch.vectors <- matrix(add, nrow = length(add),ncol =    # Create matrix with with each 
+#                        length(edstats_prepmerge_dup))          # column being vector to be added to 
+#                                                                # edstats_prepmerge_dup
+#for (x in 1:length(add)){                                             # For every country not matched,
+#  add.nomatch.vectors[x, 2:length(edstats_prepmerge_dup)] <- "NA"     # fill vector with "NA" after 
+#                        edstats_prepmerge_dup <-                      # country code and bind the 
+#                        rbind(edstats_prepmerge_dup,                  # vector as new row on              
+#                        add.nomatch.vectors[x,])                      # edstats_prepmerge_dup              
+#}
+#merged1 <- merge(dfgdp_2012_prepmerge, edstats_prepmerge_dup, by="CountryCode")  # Merge by country code
+```
+The matrix, *add.nomatch.vectors*, is created with one vector for each country code present in *add*. The country code is repeated for each indice in the vector. The for loop does two things: it fills the rest of the vector after the country code with NA, and then it tacks that row onto the bottom of *edstats_prepmerge_dup*. Then this data frame is merged with the other.
+
+<br>
+
+```{r}
+print("source(source/cleaned_merged.R)")
+```
+
+<br>
+
+#### cleaned_merged.R
+```{r cleaned_merged}
+#merged_final <- read.csv("data/merged_final.csv", stringsAsFactors = FALSE)       
+#cleaned_merged1 <- select(merged_final, "CountryCode", "Country", "Ranking",       # Select desired columns
+#                          "Millions.US.Dollars", "Income.Group")
+#cleaned_merged_final <- arrange(cleaned_merged1, CountryCode)                      # Perform final merge
+```
+This code selects out the necessary columns to answer the questions in the case study.
+
+<br>
+
 #### Question 1
 The first question presented was how many ID's in the two data sets matched.  
 ```{r}
