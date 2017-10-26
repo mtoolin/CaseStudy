@@ -10,10 +10,9 @@ library(ggplot2)
 library(knitr)
 ```
 
-## Presented by Michael Toolin, Venkat Karsala and Jamie Villenueva
+## Presented by Michael Toolin, Venkat Kasarla and Jaime Villanueva
 #Introduction
-A series of questions were presented regarding GDP data.  The data was provided in two different data sets.
-The data sets needed to be read from the internet, cleaned, merged and then the questions are answered.
+A series of questions were presented regarding GDP data of a number of countries.  The data was provided in two different data sets.  After the data is cleaned and merged, several specific questions are asked that we will answer through some analysis of the data.
 
 ```{r missmatch, echo=TRUE}
 dfgdp_2012_final <- read.csv('../data/dfgdp_2012_final.csv', stringsAsFactors = FALSE)
@@ -94,7 +93,8 @@ writeLines("td, th { padding : 6px } th { background-color : brown ; color : whi
 dset1 <- head(sorted.Income.Group_table,20)
 knitr::kable(dset1, format = "html")
 ```
-
+#Conclusion
+We compared GDP across five income groups.  We found that most of the countries fall into the High Income or Upper Middle groups.  We also found Income Rank is not an indication of GDP.  Five countries in the Lower Income group were inside the top 40 of GDP.
 
 
 
