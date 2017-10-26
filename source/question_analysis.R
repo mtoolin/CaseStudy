@@ -28,6 +28,13 @@ ggplot(cleaned_merged1, aes(x=CountryCode, y=log(Millions.US.Dollars), group=col
 
 ggplot(cleaned_merged1, aes(x=CountryCode, y=log(Millions.US.Dollars), group=colgrp,shape=colgrp)) + geom_bar(stat="identity",aes(colour=colgrp)) + scale_shape_manual(values=c(19,20,21,22,23))+ scale_colour_manual(values=c("blue", "red","gray","black","purple"))
 
+# Build Bar Graph of GDP by Income Group
+g<-ggplot(data=(subset(cleaned_merged1, !is.na(Income.Group))), aes(Income.Group))
+
+# Build Bar chart of GDP by Income Group
+g<-ggplot(data=(subset(cleaned_merged1, !is.na(Income.Group))), aes(Income.Group))
+g + geom_bar(aes(weight=Millions.US.Dollars, fill=Income.Group)) +theme(axis.text.x = element_text(angle=60, hjust=1))
+
 #Question 5
 
 quantile(Cleaned.Merged.Analysis$Ranking, seq(0, 1, length=6))
