@@ -3,7 +3,6 @@
 # Output: dfgdp_2012_final.csv
 
 library(dplyr)
-library(tidyr)
 
 # Read in and analyze the header to check how many rows to skip for a potential re-read
 # Working directory needs to be directory containing .csv to read in the data
@@ -37,5 +36,4 @@ dfgdp_2012_final <- dfgdp_2012_clean2
 
 # Working directory is Data folder
 write.csv(dfgdp_2012_final, "data/dfgdp_2012_final.csv", row.names = FALSE)
-
 

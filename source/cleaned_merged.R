@@ -1,6 +1,7 @@
 # Cleaned merged file
 # Input: merged_final.csv
 # Ouput: cleaned_merged_final.csv
+library(dplyr)
 
 merged_final <- read.csv("data/merged_final.csv", stringsAsFactors = FALSE)
 
