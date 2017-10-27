@@ -16,9 +16,8 @@ edstats_final <- data.frame(stringsAsFactors = FALSE)     #initialize empty data
 edstats_final <- tbl_df(edstats_final)
 for (x in 1:length(matched.result)){                                                          # Iterate through matched.result
   ifelse (is.na(matched.result[x]),"NA" , edstats_final <-rbind(edstats_final, edstats[x,]))  # checking for NA. If not NA
-}                                                                                             # If not NA, whole row add to
-                                                                                              # end of edstats_final
-# Working directory is Data folder
+}                                                                                             # whole row add to 
+                                                                                              # edstats_final
 write.csv(edstats_final, "data/edstats_final.csv", row.names = FALSE)
 
 
