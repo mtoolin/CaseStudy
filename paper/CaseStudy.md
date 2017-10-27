@@ -3,7 +3,10 @@
 
 
 ## Presented by Michael Toolin, Venkat Kasarla and Jaime Villanueva
-#Introduction
+
+<br>
+
+# Introduction
 A series of questions were presented regarding GDP data of a number of countries.  The data was provided in two different data sets.  After the data is cleaned and merged, several specific questions are asked that we will answer through some analysis of the data.
 
 <br>
@@ -24,11 +27,7 @@ NumMatches <- inner_join(dfgdp_2012_final,edstats_final)%>% summarise(cnt=n())%>
 ### Cleaning Raw Source Files:
 
 ```r
-print("source(source/raw_analysis_GDP.R)")
-```
-
-```
-## [1] "source(source/raw_analysis_GDP.R)"
+#source('..data/raw_analysis_GDP.R'
 ```
 
 <br>
@@ -68,11 +67,7 @@ The select function was used to filter out the data columns. Commas had to be re
 
 
 ```r
-print("source(source/raw_analysis_EDSTATS.R)")
-```
-
-```
-## [1] "source(source/raw_analysis_EDSTATS.R)"
+#source('..data/raw_analysis_EDSTSTATS.R')
 ```
 
 <br>
@@ -108,11 +103,7 @@ The country codes for the first columns are compared, and the result of the comp
 ### Merging Files and Cleaning the Merged File
 
 ```r
-print("source(source/merged.R)")
-```
-
-```
-## [1] "source(source/merged.R)"
+#source('..data/merged.R')
 ```
 
 <br>
@@ -153,11 +144,7 @@ The matrix, *add.nomatch.vectors*, is created with one vector for each country c
 
 
 ```r
-print("source(source/cleaned_merged.R)")
-```
-
-```
-## [1] "source(source/cleaned_merged.R)"
+#source('..data/cleaned_merged.R')
 ```
 
 <br>
