@@ -1064,6 +1064,9 @@ knitr::kable(dset1, format = "html")
   </tr>
 </tbody>
 </table>
+
+<br>
+
 # Conclusion
 We compared GDP across five income groups.  We found that most of the countries fall into the High Income or Upper Middle groups.  We also found Income Rank is not an indication of GDP.  Five countries in the Lower Income group were inside the top 40 of GDP.
 
